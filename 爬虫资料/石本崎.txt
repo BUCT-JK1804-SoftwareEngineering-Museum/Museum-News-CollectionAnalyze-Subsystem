@@ -1,0 +1,59 @@
+语言：python
+基本的http抓取工具scrapy
+
+基本的python爬虫伪代码：
+import Queue
+initial_page = "http://www.renminribao.com"
+url_queue = Queue.Queue()
+seen = set()
+seen.insert(initial_page)
+url_queue.put(initial_page)
+while(True): #一直进行直到海枯石烂
+    if url_queue.size()>0:
+        current_url = url_queue.get()    #拿出队例中第一个的url
+        store(current_url)               #把这个url代表的网页存储好
+        for next_url in extract_urls(current_url): #提取把这个url里链向的url
+            if next_url not in seen:      
+                seen.put(next_url)
+                url_queue.put(next_url)
+    else:
+        break
+
+但是这种方法效率过低，爬取数据太慢。
+
+爬虫用到的库：
+一、请求库
+
+实现 HTTP 请求操作
+
+1、urllib：一系列用于操作URL的功能。
+
+2、requests：基于 urllib 编写的，阻塞式 HTTP 请求库，发出一个请求，一直等待服务器响应后，程序才能进行下一步处理。
+
+3、selenium：自动化测试工具。一个调用浏览器的 driver，通过这个库你可以直接调用浏览器完成某些操作，比如输入验证码。
+
+4、aiohttp：基于 asyncio 实现的 HTTP 框架。异步操作借助于 async/await 关键字，使用异步库进行数据抓取，可以大大提高效率。
+
+二、解析库
+
+从网页中提取信息
+
+1、beautifulsoup：html 和 XML 的解析,从网页中提取信息，同时拥有强大的API和多样解析方式。
+
+2、pyquery：jQuery 的 Python 实现，能够以 jQuery 的语法来操作解析 HTML 文档，易用性和解析速度都很好。
+
+3、lxml：支持HTML和XML的解析，支持XPath解析方式，而且解析效率非常高。
+
+4、tesserocr：一个 OCR 库，在遇到验证码(图形验证码为主)的时候，可直接用 OCR 进行识别。
+
+三、存储库
+
+Python与数据库交互
+
+1、pymysql：一个纯 Python 实现的 MySQL 客户端操作库。
+
+2、pymongo：一个用于直接连接 mongodb 数据库进行查询操作的库。
+
+3、redisdump：一个用于 redis 数据导入/导出的工具。基于 ruby 实现的，因此使用它，需要先安装 Ruby。
+
+爬虫时注意的技巧与方法：https://blog.csdn.net/qq_43562262/article/details/106426954
